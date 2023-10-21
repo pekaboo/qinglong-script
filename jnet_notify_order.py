@@ -1,3 +1,8 @@
+"""
+cron: 00 9-18 * * *
+new Env(' JNET 仓发订单任务统计');
+"""
+
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 from jnet_notify_fenxiao import *
@@ -20,7 +25,8 @@ GROUP BY order_status''')
         '_id_': '序号',
         'order_status': '状态',
         'cnt': '数量'
-    }), True)
+    }), True,JNET_DD_BOT_TOKEN01,JNET_DD_BOT_SECRET01)
+
 
 
 if __name__ == "__main__":

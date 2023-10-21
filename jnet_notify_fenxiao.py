@@ -1,3 +1,8 @@
+"""
+cron: 00 18 * * *
+new Env(' JNET 分销数据');
+"""
+
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 import pymysql
@@ -178,13 +183,14 @@ def console(title: str, content: str) -> None:
     print(f"{title}\n\n{content}")
 
 
-def dingding_bot(title: str, content: str, isMarkdown: bool) -> None:
+def dingding_bot(title: str, content: str, isMarkdown: bool,TOKEN: str,SECRET: str) -> None:
     """
     使用 钉钉机器人 推送消息。
     """
-    if not push_config.get("DD_BOT_SECRET") or not push_config.get("DD_BOT_TOKEN"):
-        print("钉钉机器人 服务的 DD_BOT_SECRET 或者 DD_BOT_TOKEN 未设置!!\n取消推送")
-        return
+    if not TOKEN or not SECRET:
+        if not push_config.get("DD_BOT_SECRET") or not push_config.get("DD_BOT_TOKEN"):
+            print("钉钉机器人 服务的 DD_BOT_SECRET 或者 DD_BOT_TOKEN 未设置!!\n取消推送")
+            return
     print("钉钉机器人 服务启动")
 
     timestamp = str(round(time.time() * 1000))
@@ -1017,7 +1023,7 @@ def main():
         'product_barcode': '商品条码',
         'cnt': '分销数量',
         'qty': '库存数量'
-    }), True)
+    }), True,None,None)
 
 
 if __name__ == "__main__":
