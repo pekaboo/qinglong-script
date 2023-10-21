@@ -16,7 +16,12 @@ from email.header import Header
 from email.utils import formataddr
 
 import requests
+
+
+import sys
+sys.path.append(r'../')
 from env import *
+
 
 # 原先的 print 函数和主线程的锁
 _print = print
