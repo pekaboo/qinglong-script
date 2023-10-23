@@ -44,87 +44,7 @@ def print(text, *args, **kw):
 
 # 通知服务
 # fmt: off
-push_config = {
-    'HITOKOTO': True,                  # 启用一言（随机句子）
 
-    'BARK_PUSH': '',                    # bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
-    'BARK_ARCHIVE': '',                 # bark 推送是否存档
-    'BARK_GROUP': '',                   # bark 推送分组
-    'BARK_SOUND': '',                   # bark 推送声音
-    'BARK_ICON': '',                    # bark 推送图标
-    'BARK_LEVEL': '',                   # bark 推送时效性
-    'BARK_URL': '',                     # bark 推送跳转URL
-
-    'CONSOLE': True,                    # 控制台输出
-
-    'DD_BOT_TOKEN':  DD_BOT_TOKEN,                # 钉钉机器人的 DD_BOT_SECRET
-    'DD_BOT_SECRET': DD_BOT_SECRET,                 # 钉钉机器人的 DD_BOT_TOKEN
-
-    'FSKEY': '',                        # 飞书机器人的 FSKEY
-
-    'GOBOT_URL': '',                    # go-cqhttp
-                                        # 推送到个人QQ：http://127.0.0.1/send_private_msg
-                                        # 群：http://127.0.0.1/send_group_msg
-    'GOBOT_QQ': '',                     # go-cqhttp 的推送群或用户
-                                        # GOBOT_URL 设置 /send_private_msg 时填入 user_id=个人QQ
-                                        #               /send_group_msg   时填入 group_id=QQ群
-    'GOBOT_TOKEN': '',                  # go-cqhttp 的 access_token
-
-    'GOTIFY_URL': '',                   # gotify地址,如https://push.example.de:8080
-    'GOTIFY_TOKEN': '',                 # gotify的消息应用token
-    'GOTIFY_PRIORITY': 0,               # 推送消息优先级,默认为0
-
-    'IGOT_PUSH_KEY': '',                # iGot 聚合推送的 IGOT_PUSH_KEY
-
-    'PUSH_KEY': '',                     # server 酱的 PUSH_KEY，兼容旧版与 Turbo 版
-
-    'DEER_KEY': '',                     # PushDeer 的 PUSHDEER_KEY
-    'DEER_URL': '',                     # PushDeer 的 PUSHDEER_URL
-
-    'CHAT_URL': '',                     # synology chat url
-    'CHAT_TOKEN': '',                   # synology chat token
-
-    'PUSH_PLUS_TOKEN': '',              # push+ 微信推送的用户令牌
-    'PUSH_PLUS_USER': '',               # push+ 微信推送的群组编码
-
-    'QMSG_KEY': '',                     # qmsg 酱的 QMSG_KEY
-    'QMSG_TYPE': '',                    # qmsg 酱的 QMSG_TYPE
-
-    'QYWX_ORIGIN': '',                  # 企业微信代理地址
-
-    'QYWX_AM': '',                      # 企业微信应用
-
-    'QYWX_KEY': '',                     # 企业微信机器人
-
-    'TG_BOT_TOKEN': '',                 # tg 机器人的 TG_BOT_TOKEN，例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
-    'TG_USER_ID': '',                   # tg 机器人的 TG_USER_ID，例：1434078534
-    'TG_API_HOST': '',                  # tg 代理 api
-    'TG_PROXY_AUTH': '',                # tg 代理认证参数
-    'TG_PROXY_HOST': '',                # tg 机器人的 TG_PROXY_HOST
-    'TG_PROXY_PORT': '',                # tg 机器人的 TG_PROXY_PORT
-
-    'AIBOTK_KEY': '',                   # 智能微秘书 个人中心的apikey 文档地址：http://wechat.aibotk.com/docs/about
-    'AIBOTK_TYPE': '',                  # 智能微秘书 发送目标 room 或 contact
-    'AIBOTK_NAME': '',                  # 智能微秘书  发送群名 或者好友昵称和type要对应好
-
-    'SMTP_SERVER': '',                  # SMTP 发送邮件服务器，形如 smtp.exmail.qq.com:465
-    'SMTP_SSL': 'false',                # SMTP 发送邮件服务器是否使用 SSL，填写 true 或 false
-    'SMTP_EMAIL': '',                   # SMTP 收发件邮箱，通知将会由自己发给自己
-    'SMTP_PASSWORD': '',                # SMTP 登录密码，也可能为特殊口令，视具体邮件服务商说明而定
-    'SMTP_NAME': '',                    # SMTP 收发件人姓名，可随意填写
-
-    'PUSHME_KEY': '',                   # PushMe 酱的 PUSHME_KEY
-
-    'CHRONOCAT_QQ': '',                 # qq号
-    'CHRONOCAT_TOKEN': '',              # CHRONOCAT 的token
-    'CHRONOCAT_URL': '',                # CHRONOCAT的url地址
-
-    'WEBHOOK_URL': '',                  # 自定义通知 请求地址
-    'WEBHOOK_BODY': '',                 # 自定义通知 请求体
-    'WEBHOOK_HEADERS': '',              # 自定义通知 请求头
-    'WEBHOOK_METHOD': '',               # 自定义通知 请求方法
-    'WEBHOOK_CONTENT_TYPE': ''          # 自定义通知 content-type
-}
 notify_function = []
 # fmt: on
 
@@ -625,8 +545,17 @@ def aibotk(title: str, content: str) -> None:
     else:
         print(f'智能微秘书 推送失败！{response["error"]}')
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.header import Header
+from email.utils import formataddr
+import pandas as pd
+import io
+from email.mime.base import MIMEBase
+from email import encoders
 
-def smtp(title: str, content: str) -> None:
+def smtp(title: str, content: str, json_data: dict = None, SMTP_EMAIL_TO=None, SMTP_NAME_TO=None) -> None:
     """
     使用 SMTP 邮件 推送消息。
     """
@@ -643,7 +572,15 @@ def smtp(title: str, content: str) -> None:
         return
     print("SMTP 邮件 服务启动")
 
-    message = MIMEText(content, "plain", "utf-8")
+    if not SMTP_EMAIL_TO or not SMTP_NAME_TO:
+        if not push_config.get("SMTP_EMAIL_TO") or not push_config.get("SMTP_EMAIL_NAME_TO"):
+            SMTP_NAME_TO = push_config.get("SMTP_NAME")
+            SMTP_EMAIL_TO = push_config.get("SMTP_EMAIL")
+        else:
+            SMTP_NAME_TO = push_config.get("SMTP_NAME_TO")
+            SMTP_EMAIL_TO = push_config.get("SMTP_EMAIL_TO")
+
+    message = MIMEMultipart()
     message["From"] = formataddr(
         (
             Header(push_config.get("SMTP_NAME"), "utf-8").encode(),
@@ -652,11 +589,38 @@ def smtp(title: str, content: str) -> None:
     )
     message["To"] = formataddr(
         (
-            Header(push_config.get("SMTP_NAME"), "utf-8").encode(),
-            push_config.get("SMTP_EMAIL"),
+            Header(SMTP_NAME_TO, "utf-8").encode(),
+            SMTP_EMAIL_TO,
         )
     )
     message["Subject"] = Header(title, "utf-8")
+
+    # 添加正文内容
+    message.attach(MIMEText(content, "plain", "utf-8"))
+
+    if json_data:
+        try:
+            # 将JSON数据转换为DataFrame
+            df = pd.DataFrame(json_data)
+
+            # 将DataFrame转换为Excel文件数据
+            excel_data = io.BytesIO()
+            with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
+                df.to_excel(writer, index=False)
+            excel_data.seek(0)
+
+            # 添加Excel数据作为附件
+            attachment = MIMEBase('application', 'octet-stream')
+            attachment.set_payload(excel_data.read())
+            encoders.encode_base64(attachment)
+            attachment.add_header(
+                "Content-Disposition",
+                "attachment",
+                filename="data.xlsx"
+            )
+            message.attach(attachment)
+        except Exception as e:
+            print(f"转换为Excel并添加附件时出错：{e}")
 
     try:
         smtp_server = (
@@ -669,15 +633,14 @@ def smtp(title: str, content: str) -> None:
         )
         smtp_server.sendmail(
             push_config.get("SMTP_EMAIL"),
-            push_config.get("SMTP_EMAIL"),
-            message.as_bytes(),
+            SMTP_EMAIL_TO,
+            message.as_string(),
         )
         smtp_server.close()
         print("SMTP 邮件 推送成功！")
     except Exception as e:
         print(f"SMTP 邮件 推送失败！{e}")
-
-
+        
 def pushme(title: str, content: str) -> None:
     """
     使用 PushMe 推送消息。
@@ -1005,10 +968,14 @@ def select(cfg, sql, params=None):
     return rows
 
 
-def formatMarkdown(rows, config):
+def formatMarkdown(rows, config=None):
     formatStr = ''
     if len(rows) == 0:
         return formatStr
+    if not config:
+        config = {}
+        for k in rows[0]:
+            config[k] = k
     formatStr += '| ' + ' | '.join([config[k] for k in config]) + ' |\n'
     formatStr += '| ' + ' | '.join(['---' for _ in config]) + ' |\n'
     for row in rows:
@@ -1017,6 +984,14 @@ def formatMarkdown(rows, config):
 
 
 def main():
+    DB_SQL='''select p.product_barcode,  count(1) cnt,ba.ib_quantity  qty
+    from     wms.orders o
+            left join order_product p on o.order_id = p.order_id
+            inner join (select product_id,sum(ib_quantity) ib_quantity from inventory_batch group by product_id) ba on p.product_id = ba.product_id
+    where
+    order_status = 8 and (remark = 'vicky_fx' or remark = '2158-fx' )
+    group by p.product_barcode order by 3'''
+    DB_SELECTED_FIELD = ['product_barcode', 'cnt', 'qty']
     rowsA = select(DB_SELECTED_FIELD, DB_SQL)
     dingding_bot("分销清单", "![](https://img.shields.io/badge/%F0%9F%A7%BE-%20%E5%88%86%E9%94%80%E6%B8%85%E5%8D%95-FFDD67.svg?style=flat-square)\n"+formatMarkdown(rowsA, {
         '_id_': '序号',
@@ -1028,5 +1003,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    
+
