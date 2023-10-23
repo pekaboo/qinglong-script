@@ -1,7 +1,8 @@
 from jnet_notify_fenxiao import formatMarkdown, select, smtp
 
 import sys
-sys.path.append(r'../')
+sys.path.append(r'../') 
+
 from env import *
 
 if __name__ == "__main__":
