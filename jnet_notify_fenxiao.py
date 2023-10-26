@@ -88,6 +88,7 @@ def bark(title: str, content: str) -> None:
         params += f"{bark_params.get(pair[0])}={pair[1]}&"
     if params:
         url = url + "?" + params.rstrip("&")
+    print(url)
     response = requests.get(url).json()
 
     if response["code"] == 200:
@@ -982,6 +983,7 @@ def formatMarkdown(rows, config=None):
         formatStr += '| ' + ' | '.join([str(row[k]) for k in config]) + ' |\n'
     return formatStr
 
+# =========================================================================================
 
 def main():
     DB_SQL='''select p.product_barcode,  count(1) cnt,ba.ib_quantity  qty
