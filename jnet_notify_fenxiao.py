@@ -551,7 +551,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
 from email.utils import formataddr
-# import pandas as pd
+import pandas as pd
 import io
 from email.mime.base import MIMEBase
 from email import encoders
@@ -599,29 +599,29 @@ def smtp(title: str, content: str, json_data: dict = None, SMTP_EMAIL_TO=None, S
     # 添加正文内容
     message.attach(MIMEText(content, "plain", "utf-8"))
 
-    # if json_data:
-    #     try:
-    #         # 将JSON数据转换为DataFrame
-    #         df = pd.DataFrame(json_data)
+    if json_data:
+        try:
+            # 将JSON数据转换为DataFrame
+            df = pd.DataFrame(json_data)
 
-    #         # 将DataFrame转换为Excel文件数据
-    #         excel_data = io.BytesIO()
-    #         with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
-    #             df.to_excel(writer, index=False)
-    #         excel_data.seek(0)
+            # 将DataFrame转换为Excel文件数据
+            excel_data = io.BytesIO()
+            with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
+                df.to_excel(writer, index=False)
+            excel_data.seek(0)
 
-    #         # 添加Excel数据作为附件
-    #         attachment = MIMEBase('application', 'octet-stream')
-    #         attachment.set_payload(excel_data.read())
-    #         encoders.encode_base64(attachment)
-    #         attachment.add_header(
-    #             "Content-Disposition",
-    #             "attachment",
-    #             filename="data.xlsx"
-    #         )
-    #         message.attach(attachment)
-    #     except Exception as e:
-    #         print(f"转换为Excel并添加附件时出错：{e}")
+            # 添加Excel数据作为附件
+            attachment = MIMEBase('application', 'octet-stream')
+            attachment.set_payload(excel_data.read())
+            encoders.encode_base64(attachment)
+            attachment.add_header(
+                "Content-Disposition",
+                "attachment",
+                filename="data.xlsx"
+            )
+            message.attach(attachment)
+        except Exception as e:
+            print(f"转换为Excel并添加附件时出错：{e}")
 
     try:
         smtp_server = (
