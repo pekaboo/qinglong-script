@@ -36,15 +36,18 @@ order by a.order_status
 ''')
 
     # 我的通知
-    JNET_DD_BOT_TOKEN01= 'dd5d6ab675280baebe1b27e1886cc77cbde10c3c1260db3fd10f6193eaa7818e'             # 钉钉机器人的 DD_BOT_SECRET
-    JNET_DD_BOT_SECRET01= 'SEC6c3ce660fe65ab1df513bb9d0f304fd1bb32780455b52face67bdb7c8a610087'               # 钉钉机器人的 DD_BOT_TOKEN
+    # JNET_DD_BOT_RU_PRO= 'dd5d6ab675280baebe1b27e1886cc77cbde10c3c1260db3fd10f6193eaa7818e'             # 钉钉机器人的 DD_BOT_SECRET
+    # JNET_DD_BOT_RU_PRO_SEC= 'SEC6c3ce660fe65ab1df513bb9d0f304fd1bb32780455b52face67bdb7c8a610087'               # 钉钉机器人的 DD_BOT_TOKEN
     # 大卖
     # JNET_DD_BOT_TOKEN01= '7ec6aa45aafa293bffc08d1428d88f40efb81ada6f3d0221cebeae2fc39bd4e3'             # 钉钉机器人的 DD_BOT_SECRET
     # JNET_DD_BOT_SECRET01= 'SEC0fc2a039f62f6939f1b6d9972994b6529b9186c9fe6b78bab1c2bc266ba04513'               # 钉钉机器人的 DD_BOT_TOKEN
-    dingding_bot("仓发业务任务:", "## 仓发业务任务:\n"+formatMarkdown(rowsA, {
+    # 俄罗斯产品部
+    JNET_DD_BOT_RU_PRO= '676a4354589aec610fcc5c421a8b3d987798acba8078b33cac29ae7a14bbb260'             # 钉钉机器人的 DD_BOT_SECRET
+    JNET_DD_BOT_RU_PRO_SEC= 'SECb916117f8d33ad8a98f7833f97cb6fd71be1b6d9df9d8723627ba836338d2f2a'               # 钉钉机器人的 DD_BOT_TOKEN
+    dingding_bot("仓发业务:", "## 仓发业务任务:\n"+formatMarkdown(rowsA, {
         'order_status': '状态',
         'cnt': '数量'
-    }), True,JNET_DD_BOT_TOKEN01,JNET_DD_BOT_SECRET01)
+    }), True,JNET_DD_BOT_RU_PRO,JNET_DD_BOT_RU_PRO_SEC)
 
 
 
