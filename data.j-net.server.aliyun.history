@@ -1,0 +1,275 @@
+  731  docker ps -a
+  732  docker commit -m "Backup" -a "Docker" zsite1 zsite1_1108
+  733  docker ps -a
+  734  dl.
+  735  docker logs -f  -n 100 db54ef87820f
+  736  docker ps -a
+  737  ls
+  738  ll
+  739  df -h
+  740  cd /nfs
+  741  ls
+  742  ll
+  743  cd nexus/
+  744  ls
+  745  cd ..
+  746  ls
+  747  cd minio/
+  748  ls
+  749  cd ..
+  750  ls
+  751  cd harbor/
+  752  ls
+  753  cd ..
+  754  ls
+  755  cd git
+  756  ls
+  757  ll
+  758  cd ..
+  759  ls
+  760  cd bak
+  761  ls
+  762  ll
+  763  mkdir mysql_data
+  764  cd /
+  765  ls
+  766  cd data
+  767  ls
+  768  cd redis/
+  769  ls
+  770  cd ..
+  771  ls
+  772  cd ..
+  773  ls
+  774  cd mysql5.7/
+  775  ls
+  776  cd data/
+  777  ls
+  778  ll
+  779  cd ..
+  780  ls
+  781  ll
+  782  cd /nfs
+  783  ls
+  784  cd bak
+  785  ls
+  786  cd mysql_data/
+  787  ls
+  788  ll
+  789  pwd
+  790  mkdir jnetbidb
+  791  docker ps
+  792  docker logs -f -n 20 zsite2
+  793  telnet 127.0.0.1 92
+  794  exit
+  795  clear
+  796  history | grep zsite
+  797  ls
+  798  docker images
+  799  docker run -d -p 91:80 --name zsite2 easysoft/zsite:8.6.1_nginx
+  800  docker run -d -p 91:80 --name zsite2 easysoft/zsite:8.6.1_nginxxx
+  801  docker ps -a
+  802  docker rm -f b2da8a80ef22
+  803  docker run -d -p 92:80 --name zsite2 easysoft/zsite:8.6.1_nginx
+  804  docker ps -a
+  805  docker stop 8caf32a1388a
+  806  docker commit -m "Backup" -a "Docker" zsite1 zsite1_backup
+  807  docker start 8caf32a1388a
+  808  docker logs -f  -n 100 8caf32a1388a
+  809  df -h
+  810  docker ps
+  811  docker images -a
+  812  docker ps
+  813  docker ps -a
+  814  docker commit 8caf32a1388a zsite-jnet
+  815  docker commit 8caf32a1388a zsite-jnet:v1
+  816  exit
+  817  top
+  818  exit
+  819  docker ps -a
+  820  docker exec -it 8caf32a1388a /bin/bash
+  821  df -h
+  822  docker ps -a
+  823  docker logs -f  -n 100
+  824  docker ps -a
+  825  docker logs -f  -n 100 8caf32a1388a
+  826  docker exec -it 8caf32a1388a /bin/bash
+  827  docker images
+  828  docker ps -a
+  829  docker logs -f  -n 100 91f6ca9d9c11
+  830  docker ps -a
+  831  cler
+  832  clear
+  833  docker ps -a
+  834  df -h
+  835  docker ps -a
+  836  docker ps -a
+  837  docker exec -it ba94974a861c /bin/bash
+  838  df -h
+  839  docker ps
+  840  docker ps -a
+  841  cd /usr/
+  842  ls
+  843  cd loca
+  844  ls
+  845  cd local
+  846  ls
+  847  cd harbor
+  848  ls
+  849  docker-compose ps
+  850  df -h
+  851  docker ps
+  852  docker ps -a
+  853  history
+  854  docker ps -a
+  855  clear
+  856  docker ps -a
+  857  cd /docker/overlay2
+  858  ls
+  859  docker ps -a | grep 8ca
+  860  ls | grep 8ca
+  861  df -h
+  862  docker ps -a
+  863  history
+  864  docker ps
+  865  docker ps -=a
+  866  docker ps -a
+  867  docker ps -l
+  868  docker ps -f
+  869  docker ps -f status=exited
+  870  journalctl container_name=mysql8.0
+  871  journalctl container_name=mysql5.7
+  872  docker logs -f mysql8
+  873  docker logs -f mysql8.0
+  874  docker ps
+  875  docker logs -f mysql8.0 |more
+  876  df -lh
+  877  df -h
+  878  docker ps
+  879  exit
+  880  docker ps
+  881  df -h
+  882  docker ps
+  883  docker ps -a
+  884  ls
+  885  cd /da
+  886  ls
+  887  ll
+  888  df -h
+  889  cd /
+  890  ls
+  891  cd mysql8.0
+  892  ls
+  893  ll
+  894  cd data_dir
+  895  ls
+  896  ll
+  897  docker images -a
+  898  docker ps
+  899  cd /var
+  900  ls
+  901  cd log
+  902  ls
+  903  tail -n 1000 cron
+  904  ls
+  905  tail -n 1000 maillog
+  906  tail -n 1000 messages
+  907  tail -n 2000 messages |more
+  908  tail -n 5000 messages |more
+  909  tail -n 15000 messages |more
+  910  tail -n 25000 messages |more
+  911  tail -n 55000 messages |more
+  912  ls
+  913  ll
+  914  tail -n -n 2000 messages-20231105
+  915  tail -f -n 2000 messages-20231105
+  916  ll
+  917  cat message |more
+  918  cat messages |more
+  919  ls
+  920  tail -n 100000 messages|more
+  921  tail -n 80000 messages|more
+  922  tail -n 60000 messages|more
+  923  cd /
+  924  ls
+  925  cd mysql8.0
+  926  ls
+  927  cd backups
+  928  ls
+  929  cd ..
+  930  ls
+  931  cd data_dir
+  932  ls
+  933  cd ..
+  934  ls
+  935  cd mycon.d
+  936  ll
+  937  cd my.cnf.d
+  938  ls
+  939  ll
+  940  cd ..
+  941  ls
+  942  ll
+  943  ls
+  944  tar -cvf mysql8_data.tar data_dir
+  945  df -h
+  946  fdisk -lu
+  947  resize2fs /dev/vda1
+  948  df -TH
+  949  df -Th
+  950  resize2fs /dev/vda1
+  951  df -h
+  952  resize2fs /dev/vda1
+  953  df -lh
+  954  df -l
+  955  df -h
+  956  df -TH
+  957  fdisk -lu
+  958  resize2fs /dev/vda
+  959  resize2fs /dev/vda1
+  960  df -TH
+  961  fdisk -lu
+  962  LC_ALL=en_US.UTF-8 growpart /dev/vda 1
+  963  ls
+  964  cd /
+  965  ls
+  966  ll
+  967  du -lh --max-depth=1
+  968  cd /var
+  969  ls
+  970  du -lh --max-depth=1
+  971  cd logs
+  972  ls
+  973  cd log
+  974  ls
+  975  du -lh --max-depth=1
+  976  cd jou
+  977  cd journal
+  978  ls
+  979  rm -rf *
+  980  df -h
+  981  LC_ALL=en_US.UTF-8 growpart /dev/vda 1
+  982  resize2fs /dev/vda1
+  983  df -h
+  984  ll
+  985  df -h
+  986  systemctl status docker
+  987  systemctl restart docker
+  988  docker ps
+  989  df -lh
+  990  docker ps
+  991  docker ps -a
+  992  docker ps
+  993  docker ps -a
+  994  docker restart registry
+  995  docker ps -a
+  996  docker restart harbor-portal
+  997  docker ps -a
+  998  docker ps
+  999  eixt
+ 1000  exit
+ 1001  docker ps -a
+ 1002  docker logs -f  -n 100 ba94974a861c
+ 1003  ç
+ 1004  clear
+ 1005  docker ps -a

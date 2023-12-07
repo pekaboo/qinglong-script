@@ -972,6 +972,23 @@ def select(cfg, sql, params=None):
     return rows
 
 
+def selectDms(cfg, sql, params=None):
+    # 创建MySQLTool实例
+    my_tool = MySQLTool(DMS_DB_HOST, DMS_DB_USER,  DMS_DB_PASSWORD, DMS_DB_DATABASE)
+    result = my_tool.execute_query(sql, params)
+    if len(result) == 0:
+        return []
+    rows = []
+    for ri in range(len(result)):
+        r = {
+            '_id_': ri+1
+        }
+        for i in range(len(cfg)):
+            r[cfg[i]] = result[ri][i]
+        rows.append(r)
+    return rows
+
+
 def formatMarkdown(rows, config=None):
     formatStr = ''
     if len(rows) == 0:

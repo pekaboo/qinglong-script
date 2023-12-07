@@ -1,47 +1,78 @@
-import sys
-import os
-def fillInfo(SKU):
-    sys.path.append(r'/Users/wangjun/Code/GITEE/mac-config-sync/Script/pyscript/common/selenium/')
-    from SeleniumHelper import SeleniumHelper
-    try:
-        a = SeleniumHelper()
-        product_sku = SKU;
-        product_title = SKU;
-        product_title_en = SKU;
-        product_declared_name_zh = SKU;
-        product_declared_name = SKU;
-        product_declared_value = 1;
-        product_weight = 1;
-        product_length = 1;
-        product_width = 1;
-        product_height = 1;
-        # a.drive("http://j-net.yunwms.com/#") 
-        # a.drive("http://j-net.yunwms.com/product/product/list") 
-        # a.click('//*[@id="fix_header_content"]/div/div[1]/ul/li[7]/input[1]')
+import cx_Oracle
+cx_Oracle.init_oracle_client(lib_dir="/Users/wangjun/Plugin/instantclient_19_19")
 
-        a.drive("http://j-net.yunwms.com/product/product/create") 
-        a.input('//*[@id="product_sku"]',product_title)
-        a.input('//*[@id="product_title"]',product_title)
-        a.input('//*[@id="product_title_en"]',product_title_en)
-        a.input('//*[@id="product_declared_value"]',product_declared_value)
-        a.input('//*[@id="product_declared_name_zh"]',product_declared_name_zh)
-        a.input('//*[@id="product_declared_name"]',product_declared_name)
-        a.input('//*[@id="product_weight"]',product_weight)
-        a.input('//*[@id="product_length"]',product_length)
-        a.input('//*[@id="product_width"]',product_width)
-        a.input('//*[@id="product_height"]',product_height)
-    except Exception as e:
-        # os 弹窗
-        os.system("osascript -e 'display notification \""+str(e)+"\" with title \"错误\"'")
+class OracleHelper:
+    def __init__(self, host, port, user, pwd, dbname):
+        self.host = host
+        self.port = port
+        self.user = user
+        self.pwd = pwd
+        self.dbname = dbname
 
-    # a.click('//*[@id="productForm"]/div/input[1]') 
-def main():
-    sys.path.append(r'/Users/wangjun/Code/GITEE/mac-config-sync/Script/pyscript/common')
-    from AppSimpleUI import UserUi
-    fields = ['SKU']
-    values = ['']
+    def __str__(self):
+        return "host:%s,port:%s,user:%s,pwd:%s,dbname:%s" % (self.host, self.port, self.user, self.pwd, self.dbname)
 
-    ui = UserUi('创建EC产品', 400, 300, fields, values)
-    print(ui.data)
-    fillInfo(ui.data['SKU'])
-main()
+    def __repr__(self):
+        return "host:%s,port:%s,user:%s,pwd:%s,dbname:%s" % (self.host, self.port, self.user, self.pwd, self.dbname)
+
+    def get_conn(self):
+        """
+        获取一个数据库连接
+        :return:
+        """ 
+        try:
+            conn = oracledb.connect(self.user, self.pwd, self.host + ":" + self.port + "/" + self.dbname)
+            return conn
+        except Exception as e:
+            print("数据库连接失败：", e)
+
+    def close_conn(self, conn):
+        """
+        关闭数据库连接
+        :param conn:
+        :return:
+        """
+        try:
+            if conn:
+                conn.close()
+        except Exception as e:
+            print("关闭数据库连接失败：", e)
+
+    def get_data(self, sql):
+        """
+        查询数据
+        :param sql:
+        :return:
+        """
+        data = None
+        try:
+            conn = self.get_conn()
+            cur = conn.cursor()
+            cur.execute(sql)
+            data = cur.fetchall()
+            self.close_conn(conn)
+        except Exception as e:
+            print("查询数据失败：", e)
+        finally:
+            return data
+    def exec(self,sql,data=None):
+        print(sql,data)
+        conn = self.get_conn()
+        cur = conn.cursor()
+        if data:
+            cur.execute(sql,data)
+        else:
+            cur.execute(sql)
+        conn.commit()
+        cur.close()
+
+ 
+# filepath = r"C:\Users\wangjun\Desktop\2021年终嘉年华数据\2022云帆合约计划.xlsx"
+# columns = ['CUST_NAME','AUTH_ID','近3个月月均','建议合约类型']
+# sheet_index = 1
+# a = excel_to_json(filepath,columns,sheet_index,0)
+
+
+helper = OracleHelper("121.41.103.158","1521","jnetrpt","ru4VB5qCc","wms01")
+a = helper.get_data("select * from t_user")
+print(a)

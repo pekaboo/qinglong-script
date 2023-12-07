@@ -71,7 +71,7 @@ def loginStation(station,account,password):
         print(response.json()['data'])
         return response.json()['data']
     raise Exception(response.json()['message'])
-  
+
 def  receive(tk,barcode):
     print("barcode: ", barcode)  
     url = "https://dms-open-station.j-net.cn/OrderPreService/receive"
@@ -99,7 +99,6 @@ def  receive(tk,barcode):
     response =  requests.request("POST", url, headers=headers, data=payload)
     print(response.text)
 
-
 import concurrent.futures
 def  main():
     DB_SQL='''select  p.tracking_number from t_order_pre p left join t_sys_conf c on p.express_model_code = c.conf_key
@@ -124,7 +123,6 @@ def  main():
     #      '_id_': '序号',
     #     'tracking_number': '待自动揽收单号' 
     # }), True,None,None)
-
 
 if __name__ == "__main__":
     main()
