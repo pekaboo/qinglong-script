@@ -55,6 +55,9 @@ def getPartnerId(row):
     # 1000kg以上特殊处理
     # print(row)
     # 菜鸟外单(2):单边长小于60cm,重量小于15kg
+    
+    if(row['receiver_country']=='KZ'):
+        return 3
     if(row['length']<60 and row['length']<60 and row['length']<60  and row['weight']<15):
         return 2 
     # dpd(3):小于：单边150cm 三边相加小于200cm ,重量15-20kg
@@ -68,7 +71,7 @@ def getPartnerId(row):
         return 6
     if(row['weight']>=1000):
         print("需要拆包")
-        return None 
+        return None
     #其他都是DPD
     return 3
     # return None #row['tracking_number']+" 长:"+str(row['length'])+" 宽:"+str(row['width'])+" 高:"+str(row['height'])+" 重量:"+str(row['weight']) +" 渠道:"+str(row['upstream_express_model_code'])+" 收件地址:"+str(row['receiver_addr'])
@@ -137,6 +140,7 @@ def  main():
        t1.height,
        t1.create_date,
        t1.receiver_addr,
+       t1.receiver_country,
        t3.*
 FROM t_order t1
          INNER JOIN (SELECT distinct t.order_id -- 在库内
@@ -165,8 +169,9 @@ WHERE 1 = 1
   and t3.forward_partner_id is null
   and t1.upstream_express_model_code != 'OZON_FBS'
   and t1.upstream_express_model_code != 'RU-ZQ'
+  and t1.upstream_express_model_code != 'RU-KP'
   and t1.express_model_code = 'WLMS';'''
-    DB_SELECTED_FIELD = ['order_id', 'refer_number', 'tracking_number', 'express_model_code', 'upstream_express_model_code', 'weight', 'length', 'width', 'height', 'create_date', 'receiver_addr', 'id', 'work_station_id', 'order_id', 'forward_type', 'forward_station_id', 'forward_partner_id', 'forward_partner_label', 'forward_partner_tracking_number', 'forward_date', 'forward_ext', 'forward_partner_run_status', 'forward_partner_expected_run_date', 'forward_partner_run_date', 'forward_partner_run_message']
+    DB_SELECTED_FIELD = ['order_id', 'refer_number', 'tracking_number', 'express_model_code', 'upstream_express_model_code', 'weight', 'length', 'width', 'height', 'create_date', 'receiver_addr','receiver_country', 'id', 'work_station_id', 'order_id', 'forward_type', 'forward_station_id', 'forward_partner_id', 'forward_partner_label', 'forward_partner_tracking_number', 'forward_date', 'forward_ext', 'forward_partner_run_status', 'forward_partner_expected_run_date', 'forward_partner_run_date', 'forward_partner_run_message']
     rowsA = selectDms(DB_SELECTED_FIELD, DB_SQL)
     print("共有", len(rowsA), "个订单需要分配")
     tk = loginStation("RU-MASTER","admin", "jp@Qqk82Kp$wN4")
@@ -219,6 +224,7 @@ WHERE 1 = 1
   and t3.forward_partner_id is not null and t3.forward_partner_run_status = 'Error' and  t3.forward_partner_expected_run_date>= NOW() - INTERVAL 1 DAY
   and t1.upstream_express_model_code != 'OZON_FBS'
   and t1.upstream_express_model_code != 'RU-ZQ'
+  and t1.upstream_express_model_code != 'RU-KP'
   and t1.express_model_code = 'WLMS';'''
     DB_SELECTED_FIELD = ['tracking_number', 'forward_partner_run_message', 'forward_partner_expected_run_date']
     rowsA = selectDms(DB_SELECTED_FIELD, DB_SQL)
@@ -230,4 +236,3 @@ WHERE 1 = 1
 
 if __name__ == "__main__":
     main()
-
