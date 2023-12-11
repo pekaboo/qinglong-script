@@ -1,6 +1,6 @@
 """
-cron: 00 18 * * *
-new Env(' JNET DMS 自动揽收');
+cron: 00 13,14,15,16,17,18,19,20,21,22,23 * * *
+new Env(' JNET DMS 分配');
 """
 
 #!/usr/bin/env python3
