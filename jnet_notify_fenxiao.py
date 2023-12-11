@@ -1015,7 +1015,7 @@ def main():
     group by p.product_barcode order by 3'''
     DB_SELECTED_FIELD = ['product_barcode', 'cnt', 'qty']
     rowsA = select(DB_SELECTED_FIELD, DB_SQL)
-    dingding_bot("分销清单", "![](https://img.shields.io/badge/%F0%9F%A7%BE-%20%E5%88%86%E9%94%80%E6%B8%85%E5%8D%95-FFDD67.svg?style=flat-square)\n"+formatMarkdown(rowsA, {
+    dingding_bot("分销清单", "![](https://badgen.net/badge/icon/%E4%B8%8B%E9%9D%A2%E6%98%AF%E5%88%86%E9%94%80%E6%B8%85%E5%8D%95?icon=now&label)\n"+formatMarkdown(rowsA, {
         '_id_': '序号',
         'product_barcode': '商品条码',
         'cnt': '分销数量',
