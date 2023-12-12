@@ -56,7 +56,7 @@ def getPartnerId(row):
     # print(row)
     # 菜鸟外单(2):单边长小于60cm,重量小于15kg
     
-    if(row['receiver_country']=='KZ'):
+    if(row['receiver_country']=='KZ' or row['receiver_country']=='BY'):
         return 3
     if(row['length']<60 and row['length']<60 and row['length']<60  and row['weight']<15):
         return 2 
