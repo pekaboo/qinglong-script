@@ -229,10 +229,10 @@ WHERE 1 = 1
     DB_SELECTED_FIELD = ['tracking_number', 'forward_partner_run_message', 'forward_partner_expected_run_date']
     rowsA = selectDms(DB_SELECTED_FIELD, DB_SQL)
     smtp("近一天分配失败的清单", formatMarkdown(rowsA),rowsA,'jessie.xu@j-net.com','近一天分配失败的清单')
-    dingding_bot("DMS分配服务商","![](https://badgen.net/badge/1/待处理的尾程订单/green?icon=now)\n"+formatMarkdown(needHandle, {
+    dingding_bot("DMS分配服务商","![待处理的尾程订单]()\n"+formatMarkdown(needHandle, {
         '_id_': '序号',
         'tracking_number': '订单' 
-    }) +  "\n![](https://badgen.net/badge/2/近一天分配失败的清单，详细清单已发生到邮箱/green?icon=now)\n"+formatMarkdown(rowsA, {
+    }) +  "\n![近一天分配失败的清单]()\n"+formatMarkdown(rowsA, {
         '_id_': '序号',
         'tracking_number': '订单' 
     }), True,None,None)
