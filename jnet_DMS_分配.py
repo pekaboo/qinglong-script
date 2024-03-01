@@ -74,7 +74,7 @@ def getPartnerId(row):
         return None
     #其他都是DPD
     # return 3
-    return None
+    return None #未分配到合适的服务商
     # return None #row['tracking_number']+" 长:"+str(row['length'])+" 宽:"+str(row['width'])+" 高:"+str(row['height'])+" 重量:"+str(row['weight']) +" 渠道:"+str(row['upstream_express_model_code'])+" 收件地址:"+str(row['receiver_addr'])
 def loginStation(station,account,password):
     import requests
