@@ -56,13 +56,13 @@ def getPartnerId(row):
     # print(row)
     # 菜鸟外单(2):单边长小于60cm,重量小于15kg
     
-    if(row['receiver_country']=='KZ' or row['receiver_country']=='BY'):
-        return 3
+    # if(row['receiver_country']=='KZ' or row['receiver_country']=='BY'):
+    #     return 3
     if(row['length']<60 and row['length']<60 and row['length']<60  and row['weight']<15):
         return 2 
     # dpd(3):小于：单边150cm 三边相加小于200cm ,重量15-20kg
-    if((row['length']<150 and row['length']<150 and row['length']<150) and (row['length']+row['width']+row['height']<200) and (row['weight']>=15 and row['weight']<20)):
-        return 3
+    # if((row['length']<150 and row['length']<150 and row['length']<150) and (row['length']+row['width']+row['height']<200) and (row['weight']>=15 and row['weight']<20)):
+    #     return 3
     # 菜鸟外单到门(5):单边小于120cm， 三边相加小于200cm,重量20-30kg
     if((row['length']<120 and row['length']<120 and row['length']<120) and (row['length']+row['width']+row['height']<200) and (row['weight']>=20 and row['weight']<30)):
         return 5 
@@ -73,7 +73,8 @@ def getPartnerId(row):
         print("需要拆包")
         return None
     #其他都是DPD
-    return 3
+    # return 3
+    return None
     # return None #row['tracking_number']+" 长:"+str(row['length'])+" 宽:"+str(row['width'])+" 高:"+str(row['height'])+" 重量:"+str(row['weight']) +" 渠道:"+str(row['upstream_express_model_code'])+" 收件地址:"+str(row['receiver_addr'])
 def loginStation(station,account,password):
     import requests
