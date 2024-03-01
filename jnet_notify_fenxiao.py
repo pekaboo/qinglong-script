@@ -559,7 +559,7 @@ import io
 from email.mime.base import MIMEBase
 from email import encoders
 
-def smtp(title: str, content: str, json_data: dict = None, SMTP_EMAIL_TO=None, SMTP_NAME_TO=None) -> None:
+def smtp(title: str, content: str, json_data: dict = None, SMTP_EMAIL_TO=None, SMTP_NAME_TO=None,attachName="data") -> None:
     """
     使用 SMTP 邮件 推送消息。
     """
@@ -620,7 +620,7 @@ def smtp(title: str, content: str, json_data: dict = None, SMTP_EMAIL_TO=None, S
             attachment.add_header(
                 "Content-Disposition",
                 "attachment",
-                filename="data.xlsx"
+                filename=attachName+".xlsx"
             )
             message.attach(attachment)
         except Exception as e:

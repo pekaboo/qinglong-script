@@ -4,7 +4,8 @@ new Env(' JNET DMS 查看昨天订单未出库');
 """
 
 #!/usr/bin/env python3
-# _*_ coding:utf-8 _*_
+# _*_ coding:utf-8 _*_ 
+from datetime import datetime, timedelta
 import pymysql
 import base64
 import hashlib
@@ -73,7 +74,7 @@ def  main():
 '''
     DB_SELECTED_FIELD = ['order_order_id','tracking_number','refer_number','id','work_station_id','order_id','forward_type','forward_station_id','forward_partner_id','forward_partner_label','forward_partner_tracking_number','forward_date','forward_ext','forward_partner_run_status','forward_partner_expected_run_date','forward_partner_run_date','forward_partner_run_message']
     rowsA = selectDms(DB_SELECTED_FIELD, DB_SQL) 
-    smtp("查看昨天订单未出库", formatMarkdown(rowsA),rowsA,' xiao.xu@eu-exp.cn','近一天分配失败的清单')
+    smtp("查看昨天订单未出库", formatMarkdown(rowsA),rowsA,' xiao.xu@eu-exp.cn','近一天分配失败的清单',(datetime.now()- timedelta(days=1)).strftime("%Y%m%d-%H%M%S"))
     dingding_bot("查看昨天订单未出库","![查看昨天订单未出库]()\n"+ formatMarkdown(rowsA, {
         '_id_': '序号',
         'tracking_number': '订单' ,
