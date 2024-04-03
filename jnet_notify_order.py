@@ -118,6 +118,39 @@ order by a
             'type': '业务' ,
             'cnt': '数量🔢' ,
         }) , True,None,None) 
+        
+        
+        
+    # 头程订单
+    payload = json.dumps({
+    "sql": """
+   select 'WLMS-TC' type, SHIPPING_NUM waybill_num, c.name ,c.create_date
+            from JNETWLMS.T_SENDIN_ORDER o left join JNETCORE.T_CLIENT c on o.CLIENT_ID = c.id
+            where to_char(o.CREATE_DATE, 'yyyymm') = to_char(sysdate, 'yyyymm')
+""",
+    "column": [
+        "type",
+        "waybill_num",
+        "name",
+        "create_date"
+    ]
+    })
+    headers = { 
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    data = json.loads(response.text)  
+    if(data['code']==200): 
+        rows = data['data']
+        print(rows)
+        dingding_bot("头程本月订单统计","![头程本月订单统计]()\n"+formatMarkdown(rows, {
+            '_id_': '序号',
+            'waybill_num': '单号' ,
+            'name': '客户' ,
+            'create_date': '日期' ,
+        }) , True,None,None)  
+        
 if __name__ == "__main__":
     main()
     order()
